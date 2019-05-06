@@ -11,8 +11,8 @@ namespace AppASV.Models
 		[Key]
 		public int SeriesId { get; set; }
 		public int NumberOfSeasons { get; set; }
-		public int NumberOfEpisodes { get; set; }
-		public List<List<Episode>> Episodes { get; set; }
+		public List<int> NumberOfEpisodes { get; set; }
+		public List<int> Episodes { get; set; }
 		public Dictionary<Actor, Character> Cast { get; set; }
 		public List<String> Genres { get; set; }
 		public double Rating { get; set; }
