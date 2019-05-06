@@ -1,0 +1,25 @@
+﻿@model AppASV.Models.Series
+@{
+    ViewBag.Titlu = "Adding a new series";
+}
+
+<h2>@ViewBag.Titlu</h2>
+<form method="post" action="/Series/New">
+    @Html.HiddenFor(m => m.SeriesId)
+
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    @Html.Label("Title", "Series title")
+    <br />
+    @Html.TextBox("Title", null, new { @class = "form-control" })
+    <br /><br />
+    @Html.Label("NumberOfSeasons", "Number of seasons")
+    <br />
+    @Html.TextBox("NumberOfSeasons", null, new { @class = "form-control" })
+    <br /><br />
+    @Html.Label("NumberOfEpisodes", "Number of episodes")
+    <br />
+    @Html.TextBox("NumberOfEpisodes", null, new { @class = "form-control" })
+    <br /><br />
+    <button class="btn btn-sm btn-success" type="submit">Add series</button>
+</form>
+

@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "List of series";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@if (TempData.ContainsKey("message"))
+{
+    <h3 class="alert alert-info" role="alert">@ViewBag.message</h3>
+}
+
+
+@foreach (AppASV.Models.Series series in ViewBag.Series)
+{
+    @Html.Partial("SeriesInfo", series);
+
+}
+
+<a class="btn btn-sm btn-success" href="/Series/New">Add a new series</a>
+<br />
