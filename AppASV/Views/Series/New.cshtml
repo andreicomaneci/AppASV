@@ -1,10 +1,10 @@
-﻿@model AppASV.Models.Series
+﻿@model AppASV.Models.SeriesViewModel
 @{
     ViewBag.Titlu = "Adding a new series";
 }
 
 <h2>@ViewBag.Titlu</h2>
-<form method="post" action="/Series/New">
+@*<form method="post" action="/Series/New">
     @Html.HiddenFor(m => m.SeriesId)
 
     @Html.ValidationSummary(false, "", new { @class = "text-danger" })
@@ -20,6 +20,76 @@
     <br />
     @Html.TextBox("NumberOfEpisodes", null, new { @class = "form-control" })
     <br /><br />
+    <ul>
+        @foreach (var g in Model.AllGroups)
+        {
+            <li>
+                <input type="checkbox"
+                       name="SelectedGroups"
+                       value="@g.ID" id="@g.ID"
+                       @{if (Model.SelectedGroups.Contains(g.ID)) { <text> checked='checked' </text>  } } />
+                <label for="@g.ID">@g.Name</label>
+            </li>
+        }
+    </ul>
+
     <button class="btn btn-sm btn-success" type="submit">Add series</button>
-</form>
+</form>*@
+
+@using (Html.BeginForm("New", "Series", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+
+    <div class="row">
+        <div class="form-group col-xs-5 col-lg-5">
+            @Html.LabelFor(model => model.Series.Title)
+            <span class="glyphicon glyphicon-info-sign input-sm" data-title=""
+                  data-html="true" data-placement="right"></span>
+            @Html.TextBoxFor(model => model.Series.Title, new { @class = "form-control focus" })
+            @Html.ValidationMessageFor(m => m.Series.Title, "The title is mandatory", new
+       {
+           @class = "text-danger "
+       })
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-xs-5 col-lg-5">
+            @Html.LabelFor(model => model.Series.NumberOfSeasons)
+            <span class="glyphicon glyphicon-info-sign input-sm" data-title=""
+                  data-html="true" data-placement="right"></span>
+            @Html.TextBoxFor(model => model.Series.NumberOfSeasons, new { @class = "form-control focus" })
+            @Html.ValidationMessageFor(m => m.Series.NumberOfSeasons)
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-xs-5 col-lg-5">
+            @Html.LabelFor(model => model.Series.NumberOfEpisodes)
+            <span class="glyphicon glyphicon-info-sign input-sm" data-title=""
+                  data-html="true" data-placement="right"></span>
+            @Html.TextBoxFor(model => model.Series.NumberOfEpisodes, new { @class = "form-control focus" })
+            @Html.ValidationMessageFor(m => m.Series.NumberOfEpisodes)
+        </div>
+    </div>
+
+    <div>
+        @Html.EditorFor(x => x.Genres)
+    </div>
+
+
+
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    <div class="form-group col-md-10">
+        <p class="text-center">
+            <input type="submit" value="Create series" />
+        </p>
+    </div>
+}
+
+
 

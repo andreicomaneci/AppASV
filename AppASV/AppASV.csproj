@@ -168,6 +168,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\GenreController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SeriesController.cs" />
@@ -177,6 +178,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Actor.cs" />
     <Compile Include="Models\Character.cs" />
+    <Compile Include="Models\CheckBoxListItem.cs" />
     <Compile Include="Models\CrewMember.cs" />
     <Compile Include="Models\Episode.cs" />
     <Compile Include="Models\Genre.cs" />
@@ -187,6 +189,7 @@
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Series.cs" />
     <Compile Include="Models\SeriesGenre.cs" />
+    <Compile Include="Models\SeriesViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -253,6 +256,10 @@
     <Content Include="Views\Series\Index.cshtml" />
     <Content Include="Views\Shared\SeriesInfo.cshtml" />
     <Content Include="Views\Series\New.cshtml" />
+    <Content Include="Views\Genre\New.cshtml" />
+    <Content Include="Views\Genre\Index.cshtml" />
+    <Content Include="Views\Shared\GenreInfo.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\CheckBoxListItem.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

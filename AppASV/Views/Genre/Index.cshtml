@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "List of genres";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@if (TempData.ContainsKey("message"))
+{
+    <h3 class="alert alert-info" role="alert">@ViewBag.message</h3>
+}
+
+
+@foreach (AppASV.Models.Genre genre in ViewBag.Genres)
+{
+    @Html.Partial("GenreInfo", genre);
+
+}
+
+<a class="btn btn-sm btn-success" href="/Genre/New">Add a new genre</a>
+<br />
