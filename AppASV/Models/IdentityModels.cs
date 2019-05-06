@@ -1,6 +1,8 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -16,7 +18,9 @@ namespace AppASV.Models
             // Add custom user claims here
             return userIdentity;
         }
-    }
+
+		public IEnumerable<SelectListItem> AllRoles { get; set; }
+	}
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -25,7 +29,11 @@ namespace AppASV.Models
         {
         }
 
-        public static ApplicationDbContext Create()
+		public DbSet<Episode> Episodes { get; set; }
+		public DbSet<Actor> Actors { get; set; }
+		public DbSet<CrewMember> CrewMembers { get; set; }
+		public DbSet<Series> Series { get; set; }
+		public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
