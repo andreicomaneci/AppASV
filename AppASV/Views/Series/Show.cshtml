@@ -1,0 +1,118 @@
+﻿@model AppASV.Models.Series
+@using System
+@using Microsoft.AspNet.Identity
+@{
+    /**/
+
+    ViewBag.Titlu = "Details of the series " + @Model.Title;
+}
+
+<h2>@ViewBag.Titlu</h2>
+
+<br />
+
+<div class="panel panel-default">
+    <div class="panel-heading">@Model.Title</div>
+    <div class="panel-body">
+        Number of seasons: <strong>@Model.NumberOfSeasons</strong>
+        <br />
+        Number of episodes: <strong>@Model.NumberOfEpisodes</strong>
+        <br />
+        @ViewBag.Genres
+    </div>
+</div>
+
+<div>
+
+@if (ViewBag.Reviews != null)
+{
+    int suma = 0, count = 0;
+    foreach (var review in ViewBag.Reviews)
+    {
+        suma += @review.Stars;
+        ++count;
+    }
+    if (count > 0)
+    {
+        for (int i = 0; i < (int)Math.Round((double)suma / (double)count); i++)
+        {
+            <img src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/256/star-icon.png" alt="IMAGES" style="width: 3%; height: 3%;" />
+        }
+        for (int i = (int)Math.Round((double)suma / (double)count); i < 10; i++)
+        {
+            <img src="https://purepng.com/public/uploads/large/purepng.com-grey-starstargeometricallydecagonconcavestardomclipartblackgrey-1421526502793oblca.png" alt="IMAGES" style="width: 3%; height: 3%;" />
+        }
+    }
+    else
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            <img src="https://purepng.com/public/uploads/large/purepng.com-grey-starstargeometricallydecagonconcavestardomclipartblackgrey-1421526502793oblca.png" alt="IMAGES" style="width: 3%; height: 3%;" />
+        }
+    }
+}
+
+</div>
+
+<br />
+<br />
+@{
+    bool iHaveReviewed = false;
+
+    if (ViewBag.Reviews != null)
+    {
+        foreach (var review in ViewBag.Reviews)
+        {
+            <br />
+
+            <br />
+            for (int i = 0; i < @review.Stars; i++)
+            {
+                <img src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/256/star-icon.png" alt="IMAGES" style="width: 3%; height: 3%;" />
+            }
+            for (int i = @review.Stars; i < 10; i++)
+            {
+                <img src="https://purepng.com/public/uploads/large/purepng.com-grey-starstargeometricallydecagonconcavestardomclipartblackgrey-1421526502793oblca.png" alt="IMAGES" style="width: 3%; height: 3%;" />
+            }
+            <br />
+            @review.Text
+            <br />
+            if (@review.UserId == User.Identity.GetUserId() || User.IsInRole("Administrator") == true)
+            {
+                if (User.Identity.GetUserId() != null)
+                {
+                    iHaveReviewed = true;
+                    @Html.ActionLink("Delete review", "Delete", "Review", new { id = @review.SeriesId }, null)
+                    // <a href="/Categorie/Edit/@ViewBag.Ratings.IdRatingProdus">Modifica categorie</a>
+                    @Html.ActionLink("Edit review", "Edit", "Review", new { id = @review.SeriesId }, null)
+                }
+            }
+
+            <br /> <br />
+        }
+    }
+
+    if (!iHaveReviewed)
+    {
+        <a class="btn btn-sm btn-success" href="/Review/New/@Model.SeriesId">Write review</a>
+    }
+}
+@if (ViewBag.afisareButoane == true || ViewBag.esteAdmin)
+{
+    <a class="btn btn-sm btn-info" href="/Series/Edit/@Model.SeriesId">
+        Edit series
+    </a>
+    <br />
+
+    <form method="post" action="/Series/Delete/@Model.SeriesId">
+        @Html.HttpMethodOverride(HttpVerbs.Delete)
+        <button class="btn btn-sm btn-danger" type="submit">Delete series</button>
+    </form>
+}
+
+<hr />
+<a class="btn btn-sm btn-success" href="/Series/Index">Back to series</a>
+<a class="btn btn-sm btn-success" href="/Series/New">Add a new series</a>
+
+<br />
+

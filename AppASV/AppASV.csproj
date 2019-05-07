@@ -171,6 +171,7 @@
     <Compile Include="Controllers\GenreController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="Controllers\SeriesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -260,6 +261,8 @@
     <Content Include="Views\Genre\Index.cshtml" />
     <Content Include="Views\Shared\GenreInfo.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\CheckBoxListItem.cshtml" />
+    <Content Include="Views\Series\Show.cshtml" />
+    <Content Include="Views\Review\New.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

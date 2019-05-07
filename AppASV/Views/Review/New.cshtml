@@ -1,0 +1,23 @@
+﻿@using AppASV.Models
+
+@{
+    ViewBag.Title = "New review";
+}
+
+<h2>Write review</h2>
+
+<form method="post" action="/Review/New">
+    <label>Text</label>
+    <br />
+    <input type="text" name="Text" />
+    <br />
+    <label>Rating</label>
+    <br />
+    <input type="text" name="Stars" />
+    @{
+        var data = " between 1 and 10";
+    }
+    @data
+    <input type="text" name="SeriesId" value="@data" style="visibility:hidden" />
+    <button type="submit">Add review</button>
+</form>

@@ -28,6 +28,16 @@ namespace AppASV.Controllers
 			Series series = db.Series.Find(id);
 			ViewBag.Series = series;
 			ViewBag.afisareButoane = false;
+			ViewBag.Reviews = db.Reviews.Where(x => x.SeriesId == id);
+			var genres = db.SeriesGenres.Where(x => x.SeriesId == id);
+			ViewBag.Genres = "";
+			foreach (var genre in genres)
+			{
+				if (ViewBag.Genres == "")
+					ViewBag.Genres = genre.GenreName;
+				else
+					ViewBag.Genres += ", " + genre.GenreName;
+			}
 			if (User.IsInRole("Editor") || User.IsInRole("Administrator"))
 			{
 				ViewBag.afisareButoane = true;

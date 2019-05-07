@@ -18,6 +18,12 @@ namespace AppASV
 				url: "{controller}/{action}/{id}",
 				defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
 			);
+
+			routes.MapRoute(
+				name: "DoublePKroute",
+				url: "{controller}/{action}/{id1}/{id2}",
+				defaults: new { controller = "Home", action = "Index", id1 = UrlParameter.Optional, id2 = UrlParameter.Optional }
+			);
 		}
 	}
 }
