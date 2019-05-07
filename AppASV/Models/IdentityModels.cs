@@ -31,8 +31,11 @@ namespace AppASV.Models
 
 		public DbSet<Episode> Episodes { get; set; }
 		public DbSet<Actor> Actors { get; set; }
-		public DbSet<CrewMember> CrewMembers { get; set; }
 		public DbSet<Series> Series { get; set; }
+		public DbSet<Review> Reviews { get; set; }
+		public DbSet<Role> Characters { get; set; }
+		public DbSet<Genre> Genres { get; set; }
+		public DbSet<SeriesGenre> SeriesGenres { get; set; }
 		public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
