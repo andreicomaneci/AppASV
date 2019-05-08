@@ -263,6 +263,7 @@
     <Content Include="Views\Shared\EditorTemplates\CheckBoxListItem.cshtml" />
     <Content Include="Views\Series\Show.cshtml" />
     <Content Include="Views\Review\New.cshtml" />
+    <Content Include="Views\Genre\Show.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
