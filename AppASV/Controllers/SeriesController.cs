@@ -28,6 +28,16 @@ namespace AppASV.Controllers
 			Series series = db.Series.Find(id);
 			ViewBag.Series = series;
 			ViewBag.afisareButoane = false;
+			ViewBag.Reviews = db.Reviews.Where(x => x.SeriesId == id);
+			var genres = db.SeriesGenres.Where(x => x.SeriesId == id);
+			ViewBag.Genres = "";
+			foreach (var genre in genres)
+			{
+				if (ViewBag.Genres == "")
+					ViewBag.Genres = genre.GenreName;
+				else
+					ViewBag.Genres += ", " + genre.GenreName;
+			}
 			if (User.IsInRole("Editor") || User.IsInRole("Administrator"))
 			{
 				ViewBag.afisareButoane = true;
@@ -113,46 +123,151 @@ namespace AppASV.Controllers
 			}
 		}
 
+		[HttpGet]
 		public ActionResult Edit(int id)
 		{
-
-			Series series = db.Series.Find(id);
-			ViewBag.Series = series;
-
-			return View(series);
+			var series = db.Series.Find(id);
+			var model = new SeriesViewModel()
+			{
+				Series = series
+			};
+			var seriesGenres = db.SeriesGenres.Where(x => x.SeriesId == id).ToList();
+			var genres = new List<Genre>();
+			foreach (var seriesGenre in seriesGenres)
+			{
+				var genre = db.Genres.Find(seriesGenre.GenreName);
+				genres.Add(genre);
+			}
+			var allGenres = GetAllGenres();
+			var checkBoxListItems = new List<CheckBoxListItem>();
+			foreach (var genre in allGenres)
+			{
+				checkBoxListItems.Add(new CheckBoxListItem()
+				{
+					ID = 0,
+					Display = genre.Name,
+					//We should have already-selected genres be checked
+					IsChecked = genres.Where(x => x.Name == genre.Name).Any()
+				});
+			}
+			model.Genres = checkBoxListItems;
+			return View(model);
 		}
 
-		[HttpPut]
-		public ActionResult Edit(int id, Series requestSeries)
+		[HttpPost]
+		public ActionResult Edit(SeriesViewModel model)
 		{
+			var selectedGenres = model.Genres.Where(x => x.IsChecked).Select(x => x.Display).ToList();
 			try
 			{
-				if (ModelState.IsValid)
+				Series series = db.Series.Find(model.Series.SeriesId);
+				if (TryUpdateModel(series))
 				{
-					Series series = db.Series.Find(id);
-
-					if (TryUpdateModel(series))
+					var toDelete = db.SeriesGenres.Where(x => selectedGenres.Contains(x.GenreName) == false
+							&& x.SeriesId == series.SeriesId).ToList();
+					foreach (var item in toDelete)
 					{
-						series.Title = requestSeries.Title;
-						series.NumberOfEpisodes = requestSeries.NumberOfEpisodes;
-						series.NumberOfSeasons = requestSeries.NumberOfSeasons;
-						db.SaveChanges();
-						TempData["message"] = "The series has been edited!";
+						db.SeriesGenres.Remove(item);
 					}
-					return RedirectToAction("Index");
-
+					var alreadyIn = db.SeriesGenres.Where(x => selectedGenres.Contains(x.GenreName) == true
+							&& x.SeriesId == series.SeriesId).ToList();
+					var genresAlreadyIn = alreadyIn.Select(x => x.GenreName).ToList();
+					foreach (var genre in selectedGenres)
+					{
+						if (genresAlreadyIn.Contains(genre))
+							continue;
+						SeriesGenre seriesGenre = new SeriesGenre()
+						{
+							SeriesId = model.Series.SeriesId,
+							GenreName = genre
+						};
+						db.SeriesGenres.Add(seriesGenre);
+					}
+					series.Title = model.Series.Title;
+					series.NumberOfEpisodes = model.Series.NumberOfEpisodes;
+					series.NumberOfSeasons = model.Series.NumberOfSeasons;
+					db.SaveChanges();
 				}
 				else
 				{
-					return View();
+					return RedirectToAction("Index");
 				}
-
 			}
 			catch (Exception e)
 			{
-				return View();
+				return RedirectToAction("Index");
 			}
+			return RedirectToAction("Index");
 		}
+
+		//[HttpPut]
+		//public ActionResult Edit(int id, SeriesViewModel requestSeries)
+		//{
+		//	try
+		//	{
+		//		if (ModelState.IsValid)
+		//		{
+		//			Series series = db.Series.Find(id);
+		//			var seriesGenres = db.SeriesGenres.Where(x => x.SeriesId == id).ToList();
+		//			var genres = new List<Genre>();
+		//			foreach (var seriesGenre in seriesGenres)
+		//			{
+		//				var genre = db.Genres.Find(seriesGenre.GenreName);
+		//				genres.Add(genre);
+		//			}
+		//			List<CheckBoxListItem> genresCheckBox = new List<CheckBoxListItem>();
+		//			var allGenres = GetAllGenres();
+		//			foreach (var genre in allGenres)
+		//			{
+		//				if (genres.Contains(genre))
+		//				{
+		//					CheckBoxListItem checkBox = new CheckBoxListItem()
+		//					{
+		//						ID = 0,
+		//						Display = genre.Name,
+		//						IsChecked = true
+		//					};
+		//					genresCheckBox.Add(checkBox);
+		//				}
+		//				else
+		//				{
+		//					CheckBoxListItem checkBox = new CheckBoxListItem()
+		//					{
+		//						ID = 0,
+		//						Display = genre.Name,
+		//						IsChecked = false
+		//					};
+		//					genresCheckBox.Add(checkBox);
+		//				}
+		//			}
+		//			SeriesViewModel model = new SeriesViewModel()
+		//			{
+		//				Series = series,
+		//				Genres = genresCheckBox
+		//			};
+
+		//			if (TryUpdateModel(series))
+		//			{
+		//				series.Title = requestSeries.Series.Title;
+		//				series.NumberOfEpisodes = requestSeries.Series.NumberOfEpisodes;
+		//				series.NumberOfSeasons = requestSeries.Series.NumberOfSeasons;
+		//				db.SaveChanges();
+		//				TempData["message"] = "The series has been edited!";
+		//			}
+		//			return RedirectToAction("Index");
+
+		//		}
+		//		else
+		//		{
+		//			return View();
+		//		}
+
+		//	}
+		//	catch (Exception e)
+		//	{
+		//		return View();
+		//	}
+		//}
 
 		[HttpDelete]
 		public ActionResult Delete(int id)

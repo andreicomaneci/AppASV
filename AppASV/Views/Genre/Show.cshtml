@@ -1,0 +1,16 @@
+﻿@model AppASV.Models.Genre
+@{
+    ViewBag.Title = @Model.Name + " series";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@foreach (AppASV.Models.Series series in ViewBag.Series)
+{
+<br />
+<div>
+    @series.Title <a class="btn btn-sm btn-success" href="/Series/Show/@series.SeriesId">Details</a>
+</div>
+}
+
+

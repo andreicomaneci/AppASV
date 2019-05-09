@@ -25,7 +25,14 @@ namespace AppASV.Controllers
 		public ActionResult Show(string name)
 		{
 			Genre genre = db.Genres.Find(name);
-			ViewBag.Genres = genre;
+			ViewBag.Genre = genre;
+			var seriesWithGenre = db.SeriesGenres.Where(x => x.GenreName == name).ToList();
+			ViewBag.Series = new List<Series>();
+			foreach (var x in seriesWithGenre)
+			{
+				Series series = db.Series.Find(x.SeriesId);
+				ViewBag.Series.Add(series);
+			}
 			ViewBag.afisareButoane = false;
 			if (User.IsInRole("Editor") || User.IsInRole("Administrator"))
 			{
