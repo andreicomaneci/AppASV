@@ -265,6 +265,7 @@
     <Content Include="Views\Review\New.cshtml" />
     <Content Include="Views\Genre\Show.cshtml" />
     <Content Include="Views\Series\Edit.cshtml" />
+    <Content Include="Views\Review\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

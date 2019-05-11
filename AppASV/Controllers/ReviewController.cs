@@ -45,20 +45,21 @@ namespace AppASV.Controllers
 			}
 		}
 
-		public ActionResult Edit(int id)
-		{
-			Review review = db.Reviews.SingleOrDefault(x => (x.UserId == User.Identity.GetUserId() && x.SeriesId == id));
-			ViewBag.Review = review;
+		//public ActionResult Edit(int id)
+		//{
+		//	Review review = db.Reviews.SingleOrDefault(x => (x.UserId == User.Identity.GetUserId() && x.SeriesId == id));
+		//	ViewBag.Review = review;
 
-			return View();
-		}
+		//	return View();
+		//}
 
+		[HttpGet]
 		public ActionResult Edit(int idSeries, string idUser)
 		{
 			Review review = db.Reviews.SingleOrDefault(x => (x.UserId == idUser && x.SeriesId == idSeries));
 			ViewBag.Review = review;
 
-			return View();
+			return View(review);
 		}
 
 		[HttpPost]
@@ -68,7 +69,9 @@ namespace AppASV.Controllers
 			{
 				if (ModelState.IsValid)
 				{
-					Review review = db.Reviews.SingleOrDefault(x => (x.UserId == User.Identity.GetUserId()
+					string userId = requestReview.UserId;
+					int seriesId = requestReview.SeriesId;
+					Review review = db.Reviews.SingleOrDefault(x => (x.UserId == requestReview.UserId
 												&& x.SeriesId == requestReview.SeriesId));
 					if (TryUpdateModel(review))
 					{
@@ -89,16 +92,16 @@ namespace AppASV.Controllers
 			}
 		}
 
-		public ActionResult Delete(int id)
-		{
-			Review review = db.Reviews.SingleOrDefault(x => (x.UserId == User.Identity.GetUserId() && x.SeriesId == id));
-			if (review != null)
-			{
-				db.Reviews.Remove(review);
-				db.SaveChanges();
-			}
-			return RedirectToAction("Index", "Series");
-		}
+		//public ActionResult Delete(int id)
+		//{
+		//	Review review = db.Reviews.SingleOrDefault(x => (x.UserId == User.Identity.GetUserId() && x.SeriesId == id));
+		//	if (review != null)
+		//	{
+		//		db.Reviews.Remove(review);
+		//		db.SaveChanges();
+		//	}
+		//	return RedirectToAction("Index", "Series");
+		//}
 
 		public ActionResult Delete(int idSeries, string idUser)
 		{

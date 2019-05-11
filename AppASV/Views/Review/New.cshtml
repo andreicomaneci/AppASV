@@ -1,4 +1,5 @@
-﻿@using AppASV.Models
+﻿@model AppASV.Models.Review
+@using AppASV.Models
 
 @{
     ViewBag.Title = "New review";
@@ -6,18 +7,43 @@
 
 <h2>Write review</h2>
 
-<form method="post" action="/Review/New">
-    <label>Text</label>
-    <br />
-    <input type="text" name="Text" />
-    <br />
-    <label>Rating</label>
-    <br />
-    <input type="text" name="Stars" />
-    @{
-        var data = " between 1 and 10";
-    }
-    @data
-    <input type="text" name="SeriesId" value="@data" style="visibility:hidden" />
-    <button type="submit">Add review</button>
-</form>
+@using (Html.BeginForm("New", "Review", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+    @Html.Hidden("SeriesId", ViewContext.RouteData.Values["id"])
+
+    <div class="row">
+        <div class="form-group col-xs-5 col-lg-5">
+            @Html.LabelFor(model => model.Text)
+            <span class="glyphicon glyphicon-info-sign input-sm" data-title=""
+                  data-html="true" data-placement="right"></span>
+            @Html.TextAreaFor(model => model.Text, new { @class = "form-control focus" })
+            @Html.ValidationMessageFor(model => model.Text, "The title is mandatory", new
+       {
+           @class = "text-danger "
+       })
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-xs-5 col-lg-5">
+            @Html.LabelFor(model => model.Stars)
+            <span class="glyphicon glyphicon-info-sign input-sm" data-title=""
+                  data-html="true" data-placement="right"></span>
+            @Html.TextBoxFor(model => model.Stars, new { @class = "form-control focus" })
+            @Html.ValidationMessageFor(m => m.Series.NumberOfSeasons)
+        </div>
+    </div>
+
+
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    <div class="form-group col-md-10">
+        <p class="text-center">
+            <input type="submit" value="Post review" />
+        </p>
+    </div>
+}

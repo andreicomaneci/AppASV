@@ -26,9 +26,9 @@ namespace AppASV
 			);
 
 			routes.MapRoute(
-				name: "DoublePKroute",
-				url: "{controller}/{action}/{id1}/{id2}",
-				defaults: new { controller = "Home", action = "Index", id1 = UrlParameter.Optional, id2 = UrlParameter.Optional }
+				name: "ReviewRoute",
+				url: "Review/Edit/{idSeries}/{idUser}",
+				defaults: new { controller = "Review", action = "Edit", idSeries = UrlParameter.Optional, idUser = UrlParameter.Optional }
 			);
 		}
 	}
