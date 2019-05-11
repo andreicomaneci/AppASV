@@ -82,9 +82,11 @@
                 if (User.Identity.GetUserId() != null)
                 {
                     iHaveReviewed = true;
-                    @Html.ActionLink("Delete review", "Delete", "Review", new { id = @review.SeriesId }, null)
+                    @Html.ActionLink("Delete review", "Delete", "Review",
+                                        new { idSeries = review.SeriesId, idUser = review.UserId }, null)
                     // <a href="/Categorie/Edit/@ViewBag.Ratings.IdRatingProdus">Modifica categorie</a>
-                    @Html.ActionLink("Edit review", "Edit", "Review", new { id = @review.SeriesId }, null)
+                    @Html.ActionLink("Edit review", "Edit", "Review",
+                                        new { idSeries = review.SeriesId, idUser = review.UserId }, null)
                 }
             }
 

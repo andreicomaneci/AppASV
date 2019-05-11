@@ -4,37 +4,6 @@
 }
 
 <h2>@ViewBag.Titlu</h2>
-@*<form method="post" action="/Series/New">
-    @Html.HiddenFor(m => m.SeriesId)
-
-    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-    @Html.Label("Title", "Series title")
-    <br />
-    @Html.TextBox("Title", null, new { @class = "form-control" })
-    <br /><br />
-    @Html.Label("NumberOfSeasons", "Number of seasons")
-    <br />
-    @Html.TextBox("NumberOfSeasons", null, new { @class = "form-control" })
-    <br /><br />
-    @Html.Label("NumberOfEpisodes", "Number of episodes")
-    <br />
-    @Html.TextBox("NumberOfEpisodes", null, new { @class = "form-control" })
-    <br /><br />
-    <ul>
-        @foreach (var g in Model.AllGroups)
-        {
-            <li>
-                <input type="checkbox"
-                       name="SelectedGroups"
-                       value="@g.ID" id="@g.ID"
-                       @{if (Model.SelectedGroups.Contains(g.ID)) { <text> checked='checked' </text>  } } />
-                <label for="@g.ID">@g.Name</label>
-            </li>
-        }
-    </ul>
-
-    <button class="btn btn-sm btn-success" type="submit">Add series</button>
-</form>*@
 
 @using (Html.BeginForm("New", "Series", FormMethod.Post, new { @enctype = "multipart/form-data" }))
 {

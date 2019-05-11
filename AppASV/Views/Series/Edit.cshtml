@@ -4,31 +4,8 @@
     ViewBag.Titlu = "Edit " + @Model.Series.Title;
 }
 <h2>@ViewBag.Titlu</h2>
-@*<form method="post" action="/Series/Edit/@Model.Series.SeriesId">
-    @Html.HttpMethodOverride(HttpVerbs.Put)
-    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-    @Html.HiddenFor(m => m.Series.SeriesId)
-    <br />
-    @Html.Label("Title", "Title")
-    <br />
-    @Html.EditorFor(m => m.Series.Title)
-    <br />
-    @Html.Label("NumberOfEpisodes", "Number of episodes")
-    <br />
-    @Html.EditorFor(m => m.Series.NumberOfEpisodes)
-    <br /><br />
-    @Html.Label("NumberOfSeasons", "NumberOfSeasons")
-    <br />
-    @Html.EditorFor(m => m.Series.NumberOfSeasons)
-    <br />
-    <br />
-    <div>
-        @Html.EditorFor(m => m.Genres)
-    </div>
-    <button class="btn btn-sm btn-success" type="submit">Edit series</button>
-</form>*@
 
-@Html.ActionLink("Back to Movies", "Index")
+@Html.ActionLink("Back to series", "Index")
 <h2>Edit</h2>
 
 @using (Html.BeginForm())

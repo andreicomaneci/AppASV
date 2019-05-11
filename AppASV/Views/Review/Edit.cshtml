@@ -1,0 +1,28 @@
+﻿@model AppASV.Models.Review
+
+@{
+    ViewBag.Titlu = "Edit review";
+}
+<h2>@ViewBag.Titlu</h2>
+
+@Html.ActionLink("Back to series", "Series", "Index")
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    <div>
+        <div>
+            @Html.LabelFor(x => x.Text)
+            @Html.TextBoxFor(x => x.Text)
+        </div>
+        <div>
+            @Html.LabelFor(x => x.Stars)
+            @Html.EditorFor(x => x.Stars)
+        </div>
+        
+        
+        @Html.HiddenFor(x => x.SeriesId)
+        @Html.HiddenFor(x => x.UserId)
+        <input type="submit" value="Go!" />
+    </div>
+}
