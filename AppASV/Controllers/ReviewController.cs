@@ -45,6 +45,8 @@ namespace AppASV.Controllers
 			}
 		}
 
+		/// it probably needs a Show method
+
 		//public ActionResult Edit(int id)
 		//{
 		//	Review review = db.Reviews.SingleOrDefault(x => (x.UserId == User.Identity.GetUserId() && x.SeriesId == id));

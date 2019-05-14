@@ -11,6 +11,7 @@ namespace AppASV.Models
 		public Series Series { get; set; }
 		public List<CheckBoxListItem> Genres { get; set; }
 
+		public string ActorList { get; set; }
 		public SeriesViewModel()
 		{
 			Genres = new List<CheckBoxListItem>();

@@ -50,6 +50,18 @@
         @Html.EditorFor(x => x.Genres)
     </div>
 
+    <div class="row">
+        <div class="form-group col-xs-5 col-lg-5">
+            @Html.LabelFor(model => model.ActorList)
+            <span class="glyphicon glyphicon-info-sign input-sm" data-title=""
+                  data-html="true" data-placement="right"></span>
+            @Html.TextAreaFor(model => model.ActorList, new { @class = "form-control focus" })
+            @Html.ValidationMessageFor(m => m.ActorList, "Actors should be listed on every line as: Last_Name, First_Name; Character_Name", new
+       {
+           @class = "text-danger "
+       })
+        </div>
+    </div>
 
 
     @Html.ValidationSummary(false, "", new { @class = "text-danger" })

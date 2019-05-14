@@ -1,0 +1,23 @@
+﻿@model AppASV.Models.Genre
+@{
+    ViewBag.Title = "Edit genre";
+}
+
+
+
+@Html.ActionLink("Back to genres", "Index", "Genre")
+
+<h2>Edit genre</h2>
+
+@using (Html.BeginForm())
+{
+    <div>
+        <div>
+            @Html.LabelFor(x => x.Name)
+            @Html.TextBoxFor(x => x.Name)
+        </div>
+
+        <input type="submit" value="Do it!" />
+    </div>
+}
+
