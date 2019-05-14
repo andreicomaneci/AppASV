@@ -1,0 +1,27 @@
+﻿@model AppASV.Models.Actor
+@{
+    ViewBag.Title = "Edit actor";
+}
+
+
+
+@Html.ActionLink("Back to actors", "Index", "Actor")
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+<div>
+    <div>
+        @Html.LabelFor(x => x.FirstName)
+        @Html.TextBoxFor(x => x.FirstName)
+    </div>
+    <div>
+        @Html.LabelFor(x => x.LastName)
+        @Html.TextBoxFor(x => x.LastName)
+    </div>
+    @Html.HiddenFor(x => x.ActorId)
+    <input type="submit" value="Do it!" />
+</div>
+}
+

@@ -108,6 +108,11 @@ namespace AppASV.Controllers
 						//seriesGenre.Series = model.Series;
 						db.SeriesGenres.Add(seriesGenre);
 					}
+					List <Role> characers = GetCharacters(model.Series.SeriesId, model.ActorList);
+					foreach (Role role in characers)
+					{
+						db.Characters.Add(role);
+					}
 					db.SaveChanges();
 					TempData["message"] = "The series has been added!";
 					return RedirectToAction("Index");
@@ -127,9 +132,12 @@ namespace AppASV.Controllers
 		public ActionResult Edit(int id)
 		{
 			var series = db.Series.Find(id);
+			List<Role> characters = db.Characters.Where(x => x.SeriesId == id).ToList();
+			string actorList = ToActorList(characters);
 			var model = new SeriesViewModel()
 			{
-				Series = series
+				Series = series,
+				ActorList = actorList
 			};
 			var seriesGenres = db.SeriesGenres.Where(x => x.SeriesId == id).ToList();
 			var genres = new List<Genre>();
@@ -183,6 +191,18 @@ namespace AppASV.Controllers
 						};
 						db.SeriesGenres.Add(seriesGenre);
 					}
+
+					foreach (var chr in db.Characters.Where(x => x.SeriesId == model.Series.SeriesId))
+					{
+						db.Characters.Remove(chr);
+					}
+
+					List<Role> characers = GetCharacters(model.Series.SeriesId, model.ActorList);
+					foreach (Role role in characers)
+					{
+						db.Characters.Add(role);
+					}
+
 					series.Title = model.Series.Title;
 					series.NumberOfEpisodes = model.Series.NumberOfEpisodes;
 					series.NumberOfSeasons = model.Series.NumberOfSeasons;
@@ -224,6 +244,41 @@ namespace AppASV.Controllers
 			}
 
 			return selectList;
+		}
+
+		[NonAction]
+		public List<Role> GetCharacters(int seriesId, string charList)
+		{
+			List<Role> characters = new List<Role>();
+			string[] entries = charList.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+			for (int i = 0; i < entries.Length; ++i)
+			{
+				//if (entries[i].Equals(" ")) continue;
+				string[] data = entries[i].Split(new string[] { ", ", "; "}, StringSplitOptions.RemoveEmptyEntries);
+				string firstName = data[1];
+				string lastName = data[0];
+				Actor actor = db.Actors.Where(x => firstName.Equals(x.FirstName) && lastName.Equals(x.LastName)).FirstOrDefault();
+				Role role = new Role
+				{
+					ActorId = actor.ActorId,
+					SeriesId = seriesId,
+					CharacterName = data[2]
+				};
+				characters.Add(role);
+			}
+			return characters;
+		}
+
+		[NonAction]
+		string ToActorList(List<Role> characters)
+		{
+			string solution = "";
+			foreach (Role character in characters)
+			{
+				Actor actor = db.Actors.Find(character.ActorId);
+				solution += actor.LastName + ", " + actor.FirstName + "; " + character.CharacterName + "\n";
+			}
+			return solution;
 		}
 	}
 }

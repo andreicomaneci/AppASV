@@ -1,0 +1,17 @@
+﻿@model AppASV.Models.Actor
+@using AppASV.Models
+@{
+    ViewBag.Title = Model.FirstName + " " + Model.LastName;
+}
+
+<h2>@ViewBag.Title</h2>
+
+@foreach (Tuple<Series, string> character in ViewBag.Series)
+{
+    <br />
+    <div>
+       <a href="/Series/Show/@character.Item1.SeriesId">@character.Item1.Title</a> @character.Item2
+    </div>
+}
+
+

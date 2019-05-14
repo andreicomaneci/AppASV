@@ -1,0 +1,46 @@
+﻿@model AppASV.Models.Actor
+@{
+    ViewBag.Titlu = "Adding a new actor";
+}
+
+<h2>@ViewBag.Titlu</h2>
+@using (Html.BeginForm("New", "Actor", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(m => m.ActorId)
+
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+
+    <div class="row">
+        <div class="form-group col-xs-5 col-lg-5">
+            @Html.LabelFor(model => model.FirstName)
+            <span class="glyphicon glyphicon-info-sign input-sm" data-title=""
+                  data-html="true" data-placement="right"></span>
+            @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control focus" })
+            @Html.ValidationMessageFor(m => m.FirstName, null, new
+       {
+           @class = "text-danger "
+       })
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-xs-5 col-lg-5">
+            @Html.LabelFor(model => model.LastName)
+            <span class="glyphicon glyphicon-info-sign input-sm" data-title=""
+                  data-html="true" data-placement="right"></span>
+            @Html.TextBoxFor(model => model.LastName, new { @class = "form-control focus" })
+            @Html.ValidationMessageFor(m => m.LastName)
+        </div>
+    </div>
+
+
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    <div class="form-group col-md-10">
+        <p class="text-center">
+            <input type="submit" value="Create actor" />
+        </p>
+    </div>
+}

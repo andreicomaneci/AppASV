@@ -26,6 +26,10 @@
         <div>
             @Html.EditorFor(x => x.Genres)
         </div>
+        <div>
+            @Html.LabelFor(x => x.ActorList)
+            @Html.TextAreaFor(x => x.ActorList)
+        </div>
         @Html.HiddenFor(x => x.Series.SeriesId)
         <input type="submit" value="Go!" />
     </div>
