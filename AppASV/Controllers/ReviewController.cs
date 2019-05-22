@@ -1,4 +1,5 @@
-﻿using AppASV.Models;
+﻿using AppASV.Exceptions;
+using AppASV.Models;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -11,17 +12,21 @@ namespace AppASV.Controllers
     public class ReviewController : Controller
     {
 		private ApplicationDbContext db = ApplicationDbContext.Create();
-		// GET: Review
+
+		[Authorize(Roles = "User,Editor,Administrator")]
 		public ActionResult Index()
         {
             return View();
         }
+
+		[Authorize(Roles = "User,Editor,Administrator")]
 		public ActionResult New(int id)
 		{
 			ViewBag.Message = id;
 			return View();
 		}
 
+		[Authorize(Roles = "User,Editor,Administrator")]
 		[HttpPost]
 		public ActionResult New(Review review)
 		{
@@ -55,6 +60,7 @@ namespace AppASV.Controllers
 		//	return View();
 		//}
 
+		[Authorize(Roles = "User,Editor,Administrator")]
 		[HttpGet]
 		public ActionResult Edit(int idSeries, string idUser)
 		{
@@ -64,6 +70,7 @@ namespace AppASV.Controllers
 			return View(review);
 		}
 
+		[Authorize(Roles = "User,Editor,Administrator")]
 		[HttpPost]
 		public ActionResult Edit(Review requestReview)
 		{
@@ -72,6 +79,8 @@ namespace AppASV.Controllers
 				if (ModelState.IsValid)
 				{
 					string userId = requestReview.UserId;
+					if (!User.IsInRole("Administrator") && User.Identity.GetUserId() != userId)
+						throw new NotOwnersReviewException();
 					int seriesId = requestReview.SeriesId;
 					Review review = db.Reviews.SingleOrDefault(x => (x.UserId == requestReview.UserId
 												&& x.SeriesId == requestReview.SeriesId));
@@ -94,17 +103,7 @@ namespace AppASV.Controllers
 			}
 		}
 
-		//public ActionResult Delete(int id)
-		//{
-		//	Review review = db.Reviews.SingleOrDefault(x => (x.UserId == User.Identity.GetUserId() && x.SeriesId == id));
-		//	if (review != null)
-		//	{
-		//		db.Reviews.Remove(review);
-		//		db.SaveChanges();
-		//	}
-		//	return RedirectToAction("Index", "Series");
-		//}
-
+		[Authorize(Roles = "User,Editor,Administrator")]
 		public ActionResult Delete(int idSeries, string idUser)
 		{
 			Review review = db.Reviews.SingleOrDefault(x => (x.UserId == idUser && x.SeriesId == idSeries));

@@ -103,3 +103,9 @@ C:\Users\andrei\Desktop\Info year 3\MDS\AppASV\AppASV\obj\Debug\AppASV.csproj.Co
 C:\Users\andrei\Desktop\Info year 3\MDS\AppASV\AppASV\obj\Debug\AppASV.csproj.CopyComplete
 C:\Users\andrei\Desktop\Info year 3\MDS\AppASV\AppASV\obj\Debug\AppASV.dll
 C:\Users\andrei\Desktop\Info year 3\MDS\AppASV\AppASV\obj\Debug\AppASV.pdb
+C:\Users\andrei\Desktop\Info year 3\MDS\AppASV\AppASV\bin\Microsoft.AspNet.SignalR.Core.dll
+C:\Users\andrei\Desktop\Info year 3\MDS\AppASV\AppASV\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+C:\Users\andrei\Desktop\Info year 3\MDS\AppASV\AppASV\bin\Microsoft.AspNet.SignalR.Core.pdb
+C:\Users\andrei\Desktop\Info year 3\MDS\AppASV\AppASV\bin\Microsoft.AspNet.SignalR.Core.xml
+C:\Users\andrei\Desktop\Info year 3\MDS\AppASV\AppASV\bin\Microsoft.AspNet.SignalR.SystemWeb.pdb
+C:\Users\andrei\Desktop\Info year 3\MDS\AppASV\AppASV\bin\Microsoft.AspNet.SignalR.SystemWeb.xml

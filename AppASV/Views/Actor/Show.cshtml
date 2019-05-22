@@ -10,8 +10,20 @@
 {
     <br />
     <div>
-       <a href="/Series/Show/@character.Item1.SeriesId">@character.Item1.Title</a> @character.Item2
+        <a href="/Series/Show/@character.Item1.SeriesId">@character.Item1.Title</a> @character.Item2
     </div>
+}
+
+@if (ViewBag.afisareButoane)
+{
+    <a class="btn btn-sm btn-info" href="/Actor/Edit/@Model.ActorId">Edit actor</a>
+    <br />
+
+    <form method="post" action="/Actor/Delete/@Model.ActorId">
+        @Html.HttpMethodOverride(HttpVerbs.Delete)
+        <button class="btn btn-sm btn-danger" type="submit">Delete actor</button>
+    </form>
+
 }
 
 

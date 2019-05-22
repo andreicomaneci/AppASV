@@ -11,6 +11,7 @@ namespace AppASV.Models
 		[Key]
 		public int ActorId { get; set; }
 		public string FirstName { get; set; }
+		[Required]
 		public string LastName { get; set; }
 
 		public virtual ICollection<Role> Roles { get; set; }

@@ -10,7 +10,8 @@ namespace AppASV.Controllers
     public class ActorController : Controller
     {
 		private ApplicationDbContext db = ApplicationDbContext.Create();
-		// GET: Actor
+
+		[Authorize(Roles = "User,Editor,Administrator")]
 		public ActionResult Index()
         {
 			var actors = db.Actors;
@@ -19,9 +20,15 @@ namespace AppASV.Controllers
 				ViewBag.message = TempData["message"].ToString();
 			}
 			ViewBag.Actors = actors;
+			ViewBag.afisareButoane = false;
+			if (User.IsInRole("Editor") || User.IsInRole("Administrator"))
+			{
+				ViewBag.afisareButoane = true;
+			}
 			return View();
         }
 
+		[Authorize(Roles = "User,Editor,Administrator")]
 		public ActionResult Show(int id)
 		{
 			Actor actor = db.Actors.Find(id);
@@ -42,13 +49,14 @@ namespace AppASV.Controllers
 			return View(actor);
 		}
 
-
+		[Authorize(Roles = "Editor,Administrator")]
 		public ActionResult New()
 		{
 			Actor actor = new Actor();
 			return View(actor);
 		}
 
+		[Authorize(Roles = "Editor,Administrator")]
 		[HttpPost]
 		public ActionResult New(Actor actor)
 		{
@@ -71,6 +79,7 @@ namespace AppASV.Controllers
 			}
 		}
 
+		[Authorize(Roles = "Editor,Administrator")]
 		public ActionResult Edit(int id)
 		{
 			Actor actor = db.Actors.Find(id);
@@ -79,6 +88,7 @@ namespace AppASV.Controllers
 			return View(actor);
 		}
 
+		[Authorize(Roles = "Editor,Administrator")]
 		[HttpPut]
 		public ActionResult Edit(Actor requestActor)
 		{
@@ -110,6 +120,7 @@ namespace AppASV.Controllers
 			}
 		}
 
+		[Authorize(Roles = "Editor,Administrator")]
 		[HttpDelete]
 		public ActionResult Delete(int id)
 		{
