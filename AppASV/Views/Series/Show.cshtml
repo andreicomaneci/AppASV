@@ -99,7 +99,8 @@
         <a class="btn btn-sm btn-success" href="/Review/New/@Model.SeriesId">Write review</a>
     }
 }
-@if (true)
+
+@if (ViewBag.afisareButoane)
 {
     <a class="btn btn-sm btn-info" href="/Series/Edit/@Model.SeriesId">
         Edit series
@@ -110,11 +111,14 @@
         @Html.HttpMethodOverride(HttpVerbs.Delete)
         <button class="btn btn-sm btn-danger" type="submit">Delete series</button>
     </form>
+    
 }
 
 <hr />
 <a class="btn btn-sm btn-success" href="/Series/Index">Back to series</a>
-<a class="btn btn-sm btn-success" href="/Series/New">Add a new series</a>
-
+@if (ViewBag.afisareButoane)
+{
+    <a class="btn btn-sm btn-success" href="/Series/New">Add a new series</a>
+}
 <br />
 

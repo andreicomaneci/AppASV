@@ -7,10 +7,22 @@
 
 @foreach (AppASV.Models.Series series in ViewBag.Series)
 {
-<br />
-<div>
-    @series.Title <a class="btn btn-sm btn-success" href="/Series/Show/@series.SeriesId">Details</a>
-</div>
+    <br />
+    <div>
+        @series.Title <a class="btn btn-sm btn-success" href="/Series/Show/@series.SeriesId">Details</a>
+    </div>
+}
+
+@if (ViewBag.afisareButoane)
+{
+    <a class="btn btn-sm btn-info" href="/Genre/Edit/@Model.Name">Edit genre</a>
+    <br />
+
+    <form method="post" action="/Genre/Delete/@Model.Name">
+        @Html.HttpMethodOverride(HttpVerbs.Delete)
+        <button class="btn btn-sm btn-danger" type="submit">Delete genre</button>
+    </form>
+
 }
 
 

@@ -16,5 +16,8 @@
 
 }
 
-<a class="btn btn-sm btn-success" href="/Genre/New">Add a new genre</a>
-<br />
+@if (ViewBag.afisareButoane)
+{
+    <a class="btn btn-sm btn-success" href="/Genre/New">Add a new genre</a>
+    <br />
+}

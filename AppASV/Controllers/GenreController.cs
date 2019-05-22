@@ -10,7 +10,8 @@ namespace AppASV.Controllers
     public class GenreController : Controller
     {
 		private ApplicationDbContext db = ApplicationDbContext.Create();
-		// GET: Genre
+
+		[Authorize(Roles = "User,Editor,Administrator")]
 		public ActionResult Index()
         {
 			var genres = db.Genres;
@@ -19,9 +20,15 @@ namespace AppASV.Controllers
 				ViewBag.message = TempData["message"].ToString();
 			}
 			ViewBag.Genres = genres;
+			ViewBag.afisareButoane = false;
+			if (User.IsInRole("Editor") || User.IsInRole("Administrator"))
+			{
+				ViewBag.afisareButoane = true;
+			}
 			return View();
         }
 
+		[Authorize(Roles = "User,Editor,Administrator")]
 		public ActionResult Show(string name)
 		{
 			Genre genre = db.Genres.Find(name);
@@ -42,12 +49,14 @@ namespace AppASV.Controllers
 			return View(genre);
 		}
 
+		[Authorize(Roles = "Editor,Administrator")]
 		public ActionResult New()
 		{
 			Genre genre = new Genre();
 			return View(genre);
 		}
 
+		[Authorize(Roles = "Editor,Administrator")]
 		[HttpPost]
 		public ActionResult New(Genre genre)
 		{
@@ -71,6 +80,7 @@ namespace AppASV.Controllers
 			}
 		}
 
+		[Authorize(Roles = "Editor,Administrator")]
 		public ActionResult Edit(string name)
 		{
 			Genre genre = db.Genres.Find(name);
@@ -79,6 +89,7 @@ namespace AppASV.Controllers
 			return View(genre);
 		}
 
+		[Authorize(Roles = "Editor,Administrator")]
 		[HttpPut]
 		public ActionResult Edit(string name, Genre requestGenre)
 		{
@@ -109,6 +120,7 @@ namespace AppASV.Controllers
 			}
 		}
 
+		[Authorize(Roles = "Editor,Administrator")]
 		[HttpDelete]
 		public ActionResult Delete(string name)
 		{

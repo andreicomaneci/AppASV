@@ -26,6 +26,8 @@
     <br />
 
 }
-
-<a class="btn btn-sm btn-success" href="/Actor/New">Add a new actor</a>
-<br />
+@if (ViewBag.afisareButoane)
+{
+    <a class="btn btn-sm btn-success" href="/Actor/New">Add a new actor</a>
+    <br />
+}

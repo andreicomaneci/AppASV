@@ -1,7 +1,10 @@
-﻿using AppASV.Models;
+﻿using AppASV.Exceptions;
+using AppASV.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -11,18 +14,38 @@ namespace AppASV.Controllers
     {
 		private ApplicationDbContext db = ApplicationDbContext.Create();
 		// GET: Series
-		public ActionResult Index()
-        {
+		//public ActionResult Index()
+		//      {
+		//	var model = new SeriesViewModel();
+		//	var series = db.Series;
+		//	if (TempData.ContainsKey("message"))
+		//	{
+		//		ViewBag.message = TempData["message"].ToString();
+		//	}
+		//	ViewBag.Series = series;
+		//	return View(model);
+		//      }
+
+		[Authorize(Roles = "User,Editor,Administrator")]
+		public ActionResult Index(string searchString)
+		{
 			var model = new SeriesViewModel();
-			var series = db.Series;
-			if (TempData.ContainsKey("message"))
+			var series = db.Series.ToList();
+
+			if (!String.IsNullOrEmpty(searchString))
 			{
-				ViewBag.message = TempData["message"].ToString();
+				series = db.Series.Where(s => s.Title.Contains(searchString)).ToList();
 			}
 			ViewBag.Series = series;
+			ViewBag.afisareButoane = false;
+			if (User.IsInRole("Editor") || User.IsInRole("Administrator"))
+			{
+				ViewBag.afisareButoane = true;
+			}
 			return View(model);
-        }
+		}
 
+		[Authorize(Roles = "User,Editor,Administrator")]
 		public ActionResult Show(int id)
 		{
 			Series series = db.Series.Find(id);
@@ -46,6 +69,7 @@ namespace AppASV.Controllers
 			return View(series);
 		}
 
+		[Authorize(Roles = "Editor,Administrator")]
 		[HttpGet]
 		public ActionResult New()
 		{
@@ -65,29 +89,7 @@ namespace AppASV.Controllers
 			return View(model);
 		}
 
-		//[HttpPost]
-		//public ActionResult New(Series series)
-		//{
-		//	try
-		//	{
-		//		if (ModelState.IsValid)
-		//		{
-		//			db.Series.Add(series);
-		//			db.SaveChanges();
-		//			TempData["message"] = "The series has been added!";
-		//			return RedirectToAction("Index");
-		//		}
-		//		else
-		//		{
-		//			return View(series);
-		//		}
-		//	}
-		//	catch (Exception e)
-		//	{
-		//		return View(series);
-		//	}
-		//}
-
+		[Authorize(Roles = "Editor,Administrator")]
 		[HttpPost]
 		public ActionResult New(SeriesViewModel model)
 		{
@@ -108,8 +110,8 @@ namespace AppASV.Controllers
 						//seriesGenre.Series = model.Series;
 						db.SeriesGenres.Add(seriesGenre);
 					}
-					List <Role> characers = GetCharacters(model.Series.SeriesId, model.ActorList);
-					foreach (Role role in characers)
+					List <Role> characters = GetCharacters(model.Series.SeriesId, model.ActorList);
+					foreach (Role role in characters)
 					{
 						db.Characters.Add(role);
 					}
@@ -128,6 +130,7 @@ namespace AppASV.Controllers
 			}
 		}
 
+		[Authorize(Roles = "Editor,Administrator")]
 		[HttpGet]
 		public ActionResult Edit(int id)
 		{
@@ -162,6 +165,7 @@ namespace AppASV.Controllers
 			return View(model);
 		}
 
+		[Authorize(Roles = "User,Editor,Administrator")]
 		[HttpPost]
 		public ActionResult Edit(SeriesViewModel model)
 		{
@@ -258,6 +262,8 @@ namespace AppASV.Controllers
 				string firstName = data[1];
 				string lastName = data[0];
 				Actor actor = db.Actors.Where(x => firstName.Equals(x.FirstName) && lastName.Equals(x.LastName)).FirstOrDefault();
+				if (actor == null)
+					throw new ActorNotFoundException();
 				Role role = new Role
 				{
 					ActorId = actor.ActorId,

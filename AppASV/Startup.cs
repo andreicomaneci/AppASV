@@ -12,9 +12,10 @@ namespace AppASV
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
-        }
+			CreateAdminUserAndApplicationRoles();
+		}
 
-		private void createAdminUserAndApplicationRoles()
+		private void CreateAdminUserAndApplicationRoles()
 		{
 			ApplicationDbContext context = new ApplicationDbContext();
 			var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
