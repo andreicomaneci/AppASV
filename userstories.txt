@@ -1,0 +1,20 @@
+1. Ca administrator, doresc să adaug seriale.
+
+2. Ca administrator, doresc să editez seriale, pentru ca utilizatorii să aibă infomații cât mai bune.
+
+3. Ca utilizator, doresc să pot evalua serialele.
+
+4. Ca utilizator, doresc să scriu recenzii serialelor, pentru ca alți utilizatori să își facă o părere despre acestea.
+
+5. Ca utilizator, doresc să caut seriale după gen, pentru a descoperi noi seriale.
+
+6. Ca utilizator, doresc să găsesc informații despre actori, pentru a cunoaște alte seriale în care au jucat actorii favoriți.
+
+7. Ca utilizator, doresc să primesc recomandări de seriale similare celor văzute, pentru a descoperi noi seriale.
+
+8. Ca utilizator, doresc să primesc notificări despre cele mai noi apariții, pentru a fi cât mai informat.
+
+9. Ca telespectator, doresc să aflu când va apărea cel mai nou episod, pentru a ști când voi urmări un nou episod.
+
+10. Ca utilizator, doresc să caut serialele după nume.
+
