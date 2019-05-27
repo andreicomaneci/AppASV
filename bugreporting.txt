@@ -1,0 +1,11 @@
+Am observat o problemă cu adăugarea recenziilor, deși modelul este valid. Se pare că id-ul este transmis 0 în acțiunea controllerului.
+----> Am descoperit că era incorectă calea de acces. S-a adăugat o nouă rută ca să acopere formatul pentru acestea.
+
+Am observat o problemă cu crearea actorilor. Există data care nu sunt transmise în controller.
+----> Am descoperit că lipsea mențiunea în butonul de trimitere a formularului ca acțiunea să fie de tip post.
+
+Am observat că episodul nu se adăuga după trimitere. Apare o referință null în controller.
+----> Datele din componenta dropdown nu erau inițializate după trimitere și trimiteau un elemnt null în view.
+
+Am observat că un nou episod nu se putea adăuga. Era afișat un mesaj în care spunea că titlul nu este valid.
+----> Am descoperit că a fost o eroare în scrierea modelului: titlul a fost definit de tip int în loc de string.
