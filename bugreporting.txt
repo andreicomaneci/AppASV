@@ -9,3 +9,6 @@ Am observat că episodul nu se adăuga după trimitere. Apare o referință null
 
 Am observat că un nou episod nu se putea adăuga. Era afișat un mesaj în care spunea că titlul nu este valid.
 ----> Am descoperit că a fost o eroare în scrierea modelului: titlul a fost definit de tip int în loc de string.
+
+După înregistrare, un utilizator nu putea să vadă paginile autorizate, deși avea rolul necesar.
+----> Am descoperit că validarea contului se face după 30 minute de la înregistrare sau la al doilea login (default).
