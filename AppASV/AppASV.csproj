@@ -176,6 +176,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ActorController.cs" />
+    <Compile Include="Controllers\EpisodeController.cs" />
     <Compile Include="Controllers\GenreController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -191,12 +192,11 @@
     <Compile Include="Models\Actor.cs" />
     <Compile Include="Models\Character.cs" />
     <Compile Include="Models\CheckBoxListItem.cs" />
-    <Compile Include="Models\CrewMember.cs" />
     <Compile Include="Models\Episode.cs" />
+    <Compile Include="Models\FavouriteSeries.cs" />
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Person.cs" />
     <Compile Include="Models\Review.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Series.cs" />
@@ -286,6 +286,10 @@
     <Content Include="Views\Genre\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
+    <Content Include="Views\Episode\Index.cshtml" />
+    <Content Include="Views\Episode\Show.cshtml" />
+    <Content Include="Views\Episode\New.cshtml" />
+    <Content Include="Views\Users\Show.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -11,16 +11,15 @@ namespace AppASV.Models
 		[Key]
 		public int EpisodeId { get; set; }
 		[Required]
-		public int Title { get; set; }
+		public string Title { get; set; }
 		public int Length { get; set; }
-		public double Rating { get; set; }
 		public DateTime AirDate { get; set; }
 		[Required]
 		public int SeriesId { get; set; }
 		public int SeasonNumber { get; set; }
 		public int EpisodeNumber { get; set; }
 
-		//public virtual ICollection<Actor> Cast { get; set; }
-		public virtual ICollection<Review> Reviews { get; set; }
+		public Series series { get; set; }
+
 	}
 }

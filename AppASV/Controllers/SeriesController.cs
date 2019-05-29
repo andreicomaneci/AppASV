@@ -1,5 +1,6 @@
 ﻿using AppASV.Exceptions;
 using AppASV.Models;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -66,7 +67,26 @@ namespace AppASV.Controllers
 				ViewBag.afisareButoane = true;
 			}
 			ViewBag.esteAdmin = User.IsInRole("Administrator");
-			return View(series);
+			ViewBag.Episodes = GetAllEpisodes(id);
+			SeriesViewModel model = new SeriesViewModel
+			{
+				Series = series,
+				Genres = new List<CheckBoxListItem>(),
+				ActorList = "",
+				IsFavourite = false
+			};
+
+			string currentUserId = User.Identity.GetUserId();
+			if (db.FavouriteSeries.Any(u => u.SeriesId == series.SeriesId && currentUserId.Equals(u.UserId)))
+			{
+				model.IsFavourite = true;
+			}
+			else
+			{
+				model.IsFavourite = false;
+			}
+
+			return View(model);
 		}
 
 		[Authorize(Roles = "Editor,Administrator")]
@@ -235,6 +255,58 @@ namespace AppASV.Controllers
 			return RedirectToAction("Index");
 		}
 
+		
+		public ActionResult Unfavourite(int id)
+		{
+			Series series = db.Series.Find(id);
+			try
+			{
+				string currentUserId = User.Identity.GetUserId();
+				if (db.FavouriteSeries.Any(u => u.SeriesId == id && currentUserId.Equals(u.UserId)))
+				{
+					FavouriteSeries fs = db.FavouriteSeries.
+						Where(u => u.SeriesId == id && currentUserId.Equals(u.UserId)).FirstOrDefault();
+					db.FavouriteSeries.Remove(fs);
+					db.SaveChanges();
+				}
+			}
+			catch (Exception e)
+			{
+				return RedirectToAction("Show", new { id = id });
+			}
+			return RedirectToAction("Show", new { id = id });
+		}
+
+		
+		public ActionResult Favourite(int id)
+		{
+			Series series = db.Series.Find(id);
+			try
+			{
+				string currentUserId = User.Identity.GetUserId();
+				if (db.FavouriteSeries.Any(u => u.SeriesId == id && currentUserId.Equals(u.UserId)))
+				{
+
+				}
+				else
+				{
+					FavouriteSeries fs = new FavouriteSeries
+					{
+						SeriesId = id,
+						UserId = User.Identity.GetUserId()
+					};
+
+					db.FavouriteSeries.Add(fs);
+					db.SaveChanges();
+				}
+			}
+			catch (Exception e)
+			{
+				return RedirectToAction("Show", new { id = id });
+			}
+			return RedirectToAction("Show", new { id = id });
+		}
+
 		[NonAction]
 		public List<Genre> GetAllGenres()
 		{
@@ -254,6 +326,8 @@ namespace AppASV.Controllers
 		public List<Role> GetCharacters(int seriesId, string charList)
 		{
 			List<Role> characters = new List<Role>();
+			if (charList == null)
+				return characters;
 			string[] entries = charList.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
 			for (int i = 0; i < entries.Length; ++i)
 			{
@@ -276,7 +350,7 @@ namespace AppASV.Controllers
 		}
 
 		[NonAction]
-		string ToActorList(List<Role> characters)
+		public string ToActorList(List<Role> characters)
 		{
 			string solution = "";
 			foreach (Role character in characters)
@@ -285,6 +359,13 @@ namespace AppASV.Controllers
 				solution += actor.LastName + ", " + actor.FirstName + "; " + character.CharacterName + "\n";
 			}
 			return solution;
+		}
+
+		[NonAction]
+		public List<Episode> GetAllEpisodes(int id)
+		{
+			List<Episode> list = db.Episodes.Where(x => x.SeriesId == id).ToList();
+			return list;
 		}
 	}
 }

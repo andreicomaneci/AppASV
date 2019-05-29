@@ -1,56 +1,88 @@
-﻿@model AppASV.Models.Series
+﻿@model AppASV.Models.SeriesViewModel
 @using System
 @using Microsoft.AspNet.Identity
 @{
     /**/
 
-    ViewBag.Titlu = "Details of the series " + @Model.Title;
+    ViewBag.Titlu = "Details of the series " + @Model.Series.Title;
 }
 
 <h2>@ViewBag.Titlu</h2>
 
+<div>
+    @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+    {
+        if (Model.IsFavourite)
+        {
+            <button class="btn-link glyphicon glyphicon-heart" type="button"
+                    onclick="location.href='@Url.Action("Unfavourite", "Series", new { id = Model.Series.SeriesId })'"></button>
+        }
+        else
+        {
+            <button class="btn-link glyphicon glyphicon-heart-empty" type="button"
+                    onclick="location.href='@Url.Action("Favourite", "Series", new { id = Model.Series.SeriesId })'"></button>
+        }
+    }
+</div>
+
 <br />
 
 <div class="panel panel-default">
-    <div class="panel-heading">@Model.Title</div>
+    <div class="panel-heading">@Model.Series.Title</div>
     <div class="panel-body">
-        Number of seasons: <strong>@Model.NumberOfSeasons</strong>
+        Number of seasons: <strong>@Model.Series.NumberOfSeasons</strong>
         <br />
-        Number of episodes: <strong>@Model.NumberOfEpisodes</strong>
+        Number of episodes: <strong>@Model.Series.NumberOfEpisodes</strong>
         <br />
         @ViewBag.Genres
     </div>
 </div>
 
+<ul style="list-style-type:none;">
+    @foreach (var episode in ViewBag.Episodes)
+    {
+        <li>
+            S@{@episode.SeasonNumber}E@{@episode.EpisodeNumber} <a href="/Episode/Show/@episode.EpisodeId">@episode.Title</a>
+        </li>
+    }
+</ul>
+
+<div>
+    @if (ViewBag.afisareButoane)
+    {
+        <a class="btn btn-sm btn-success" href="/Episode/New">Add a new episode</a>
+    }
+</div>
+
 <div>
 
-@if (ViewBag.Reviews != null)
-{
-    int suma = 0, count = 0;
-    foreach (var review in ViewBag.Reviews)
+    @if (ViewBag.Reviews != null)
     {
-        suma += @review.Stars;
-        ++count;
-    }
-    if (count > 0)
-    {
-        for (int i = 0; i < (int)Math.Round((double)suma / (double)count); i++)
+        int suma = 0, count = 0;
+        foreach (var review in ViewBag.Reviews)
         {
-            <img src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/256/star-icon.png" alt="IMAGES" style="width: 3%; height: 3%;" />
+            suma += @review.Stars;
+            ++count;
         }
-        for (int i = (int)Math.Round((double)suma / (double)count); i < 10; i++)
+        if (count > 0)
         {
-            <img src="https://purepng.com/public/uploads/large/purepng.com-grey-starstargeometricallydecagonconcavestardomclipartblackgrey-1421526502793oblca.png" alt="IMAGES" style="width: 3%; height: 3%;" />
+            for (int i = 0; i < (int)Math.Round((double)suma / (double)count); i++)
+            {
+                <img src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/256/star-icon.png" alt="IMAGES" style="width: 3%; height: 3%;" />
+            }
+            for (int i = (int)Math.Round((double)suma / (double)count); i < 10; i++)
+            {
+                <img src="https://purepng.com/public/uploads/large/purepng.com-grey-starstargeometricallydecagonconcavestardomclipartblackgrey-1421526502793oblca.png" alt="IMAGES" style="width: 3%; height: 3%;" />
+            }
+        }
+        else
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                <img src="https://purepng.com/public/uploads/large/purepng.com-grey-starstargeometricallydecagonconcavestardomclipartblackgrey-1421526502793oblca.png" alt="IMAGES" style="width: 3%; height: 3%;" />
+            }
         }
     }
-    else
-    {
-        for (int i = 0; i < 10; i++)
-        {
-            <img src="https://purepng.com/public/uploads/large/purepng.com-grey-starstargeometricallydecagonconcavestardomclipartblackgrey-1421526502793oblca.png" alt="IMAGES" style="width: 3%; height: 3%;" />
-        }
-    }
-}
 
 </div>
 
@@ -96,22 +128,22 @@
 
     if (!iHaveReviewed)
     {
-        <a class="btn btn-sm btn-success" href="/Review/New/@Model.SeriesId">Write review</a>
+        <a class="btn btn-sm btn-success" href="/Review/New/@Model.Series.SeriesId">Write review</a>
     }
 }
 
 @if (ViewBag.afisareButoane)
 {
-    <a class="btn btn-sm btn-info" href="/Series/Edit/@Model.SeriesId">
+    <a class="btn btn-sm btn-info" href="/Series/Edit/@Model.Series.SeriesId">
         Edit series
     </a>
     <br />
 
-    <form method="post" action="/Series/Delete/@Model.SeriesId">
+    <form method="post" action="/Series/Delete/@Model.Series.SeriesId">
         @Html.HttpMethodOverride(HttpVerbs.Delete)
         <button class="btn btn-sm btn-danger" type="submit">Delete series</button>
     </form>
-    
+
 }
 
 <hr />

@@ -14,7 +14,7 @@
 
     <div class="row">
         <div class="form-group col-xs-5 col-lg-5">
-            @Html.LabelFor(model => model.FirstName)
+            @Html.LabelFor(model => model.FirstName, "First name")
             <span class="glyphicon glyphicon-info-sign input-sm" data-title=""
                   data-html="true" data-placement="right"></span>
             @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control focus" })
@@ -28,7 +28,7 @@
 
     <div class="row">
         <div class="form-group col-xs-5 col-lg-5">
-            @Html.LabelFor(model => model.LastName)
+            @Html.LabelFor(model => model.LastName, "Last name")
             <span class="glyphicon glyphicon-info-sign input-sm" data-title=""
                   data-html="true" data-placement="right"></span>
             @Html.TextBoxFor(model => model.LastName, new { @class = "form-control focus" })

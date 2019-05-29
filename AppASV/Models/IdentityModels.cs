@@ -36,6 +36,7 @@ namespace AppASV.Models
 		public DbSet<Role> Characters { get; set; }
 		public DbSet<Genre> Genres { get; set; }
 		public DbSet<SeriesGenre> SeriesGenres { get; set; }
+		public DbSet<FavouriteSeries> FavouriteSeries { get; set; }
 		public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

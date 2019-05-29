@@ -12,22 +12,22 @@
 {
     <div>
         <div>
-            @Html.LabelFor(x => x.Series.Title)
+            @Html.LabelFor(x => x.Series.Title, "Title")
             @Html.TextBoxFor(x => x.Series.Title)
         </div>
         <div>
-            @Html.LabelFor(x => x.Series.NumberOfEpisodes)
+            @Html.LabelFor(x => x.Series.NumberOfEpisodes, "Number of episodes")
             @Html.EditorFor(x => x.Series.NumberOfEpisodes)
         </div>
         <div>
-            @Html.LabelFor(x => x.Series.NumberOfSeasons)
+            @Html.LabelFor(x => x.Series.NumberOfSeasons, "Number of seasons")
             @Html.TextBoxFor(x => x.Series.NumberOfSeasons)
         </div>
         <div>
             @Html.EditorFor(x => x.Genres)
         </div>
         <div>
-            @Html.LabelFor(x => x.ActorList)
+            @Html.LabelFor(x => x.ActorList, "Cast")
             @Html.TextAreaFor(x => x.ActorList)
         </div>
         @Html.HiddenFor(x => x.Series.SeriesId)

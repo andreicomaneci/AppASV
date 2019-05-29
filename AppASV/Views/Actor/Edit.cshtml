@@ -13,11 +13,11 @@
 {
 <div>
     <div>
-        @Html.LabelFor(x => x.FirstName)
+        @Html.LabelFor(x => x.FirstName, "First name")
         @Html.TextBoxFor(x => x.FirstName)
     </div>
     <div>
-        @Html.LabelFor(x => x.LastName)
+        @Html.LabelFor(x => x.LastName, "Last name")
         @Html.TextBoxFor(x => x.LastName)
     </div>
     @Html.HiddenFor(x => x.ActorId)

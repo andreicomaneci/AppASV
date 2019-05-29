@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "My favourite series";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<ul style="list-style-type:none;">
+    @foreach (var series in ViewBag.SeriesList)
+    {
+        <li><i class="glyphicon glyphicon-heart"></i>
+            <a href="/Episode/Show/@series.SeriesId">@series.Title</a>
+        </li>
+    }
+</ul>
+
