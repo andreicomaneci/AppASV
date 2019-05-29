@@ -14,7 +14,7 @@
 
     <div class="row">
         <div class="form-group col-xs-5 col-lg-5">
-            @Html.LabelFor(model => model.Series.Title)
+            @Html.LabelFor(model => model.Series.Title, "Title")
             <span class="glyphicon glyphicon-info-sign input-sm" data-title=""
                   data-html="true" data-placement="right"></span>
             @Html.TextBoxFor(model => model.Series.Title, new { @class = "form-control focus" })
@@ -28,7 +28,7 @@
 
     <div class="row">
         <div class="form-group col-xs-5 col-lg-5">
-            @Html.LabelFor(model => model.Series.NumberOfSeasons)
+            @Html.LabelFor(model => model.Series.NumberOfSeasons, "Number of seasons")
             <span class="glyphicon glyphicon-info-sign input-sm" data-title=""
                   data-html="true" data-placement="right"></span>
             @Html.TextBoxFor(model => model.Series.NumberOfSeasons, new { @class = "form-control focus" })
@@ -38,7 +38,7 @@
 
     <div class="row">
         <div class="form-group col-xs-5 col-lg-5">
-            @Html.LabelFor(model => model.Series.NumberOfEpisodes)
+            @Html.LabelFor(model => model.Series.NumberOfEpisodes, "Number of episodes")
             <span class="glyphicon glyphicon-info-sign input-sm" data-title=""
                   data-html="true" data-placement="right"></span>
             @Html.TextBoxFor(model => model.Series.NumberOfEpisodes, new { @class = "form-control focus" })
@@ -52,7 +52,7 @@
 
     <div class="row">
         <div class="form-group col-xs-5 col-lg-5">
-            @Html.LabelFor(model => model.ActorList)
+            @Html.LabelFor(model => model.ActorList, "Cast")
             <span class="glyphicon glyphicon-info-sign input-sm" data-title=""
                   data-html="true" data-placement="right"></span>
             @Html.TextAreaFor(model => model.ActorList, new { @class = "form-control focus" })

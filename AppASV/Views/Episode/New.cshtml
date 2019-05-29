@@ -1,0 +1,75 @@
+﻿@model AppASV.Models.Episode
+@{
+    ViewBag.Title = "New";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("New", "Episode", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(m => m.EpisodeId)
+
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+
+
+    <div class="row">
+        <div class="form-group col-xs-5 col-lg-5">
+            @Html.LabelFor(model => model.Title, "Title")
+            <span class="glyphicon glyphicon-info-sign input-sm" data-title=""
+                  data-html="true" data-placement="right"></span>
+            @Html.TextBoxFor(model => model.Title, new { @class = "form-control focus" })
+            @Html.ValidationMessageFor(m => m.Title, null, new { @class = "text-danger " })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-xs-5 col-lg-5">
+            @Html.LabelFor(model => model.Length, "Length")
+            <span class="glyphicon glyphicon-info-sign input-sm" data-title=""
+                  data-html="true" data-placement="right"></span>
+            @Html.TextBoxFor(model => model.Length, new { @class = "form-control focus" })
+            @Html.ValidationMessageFor(m => m.Length, null, new { @class = "text-danger " })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-xs-5 col-lg-5">
+            @Html.LabelFor(model => model.AirDate, "Air date")
+            <span class="glyphicon glyphicon-info-sign input-sm" data-title=""
+                  data-html="true" data-placement="right"></span>
+            @Html.TextBoxFor(model => model.AirDate, new { @class = "form-control focus", @type = "date" })
+            @Html.ValidationMessageFor(m => m.AirDate, null, new { @class = "text-danger " })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-xs-5 col-lg-5">
+            @Html.LabelFor(model => model.SeasonNumber, "Season number")
+            <span class="glyphicon glyphicon-info-sign input-sm" data-title=""
+                  data-html="true" data-placement="right"></span>
+            @Html.TextBoxFor(model => model.SeasonNumber, new { @class = "form-control focus" })
+            @Html.ValidationMessageFor(m => m.SeasonNumber, null, new { @class = "text-danger " })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-xs-5 col-lg-5">
+            @Html.LabelFor(model => model.EpisodeNumber, "Episode number")
+            <span class="glyphicon glyphicon-info-sign input-sm" data-title=""
+                  data-html="true" data-placement="right"></span>
+            @Html.TextBoxFor(model => model.EpisodeNumber, new { @class = "form-control focus" })
+            @Html.ValidationMessageFor(m => m.EpisodeNumber, null, new { @class = "text-danger " })
+        </div>
+    </div>
+
+    <div>@Html.DropDownListFor(m => m.SeriesId, new SelectList(ViewBag.SeriesList, "Value", "Text"), "Select series", new { @class = "form-control" })</div>
+  
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    <div class="form-group col-md-10">
+        <p class="text-center">
+            <input type="submit" value="Create episode" />
+        </p>
+    </div>
+}
+

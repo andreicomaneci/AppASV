@@ -27,6 +27,10 @@
                     <li>@Html.ActionLink("Series", "Index", "Series")</li>
                     <li>@Html.ActionLink("Genres", "Index", "Genre")</li>
                     <li>@Html.ActionLink("Actors", "Index", "Actor")</li>
+                    @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("Favourite Series", "Show", "Users")</li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

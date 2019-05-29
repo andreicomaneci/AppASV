@@ -9,11 +9,11 @@ using System.Web.Mvc;
 
 namespace AppASV.Controllers
 {
-	[Authorize(Roles = "Administrator")]
 	public class UsersController : Controller
     {
 		private ApplicationDbContext db = ApplicationDbContext.Create();
 
+		[Authorize(Roles = "Administrator")]
 		public ActionResult Index()
 		{
 			var users = from user in db.Users
@@ -24,6 +24,21 @@ namespace AppASV.Controllers
 			return View();
 		}
 
+		public ActionResult Show()
+		{
+			string currentUserId = User.Identity.GetUserId();
+			var favouriteSeries = db.FavouriteSeries.Where(x => currentUserId.Equals(x.UserId)).ToList();
+			List<Series> seriesList = new List<Series>();
+			foreach (FavouriteSeries fs in favouriteSeries)
+			{
+				Series series = db.Series.Find(fs.SeriesId);
+				seriesList.Add(series);
+			}
+			ViewBag.SeriesList = seriesList;
+			return View();
+		}
+
+		[Authorize(Roles = "Administrator")]
 		public ActionResult Edit(string id)
 		{
 			ApplicationUser user = db.Users.Find(id);
@@ -50,6 +65,7 @@ namespace AppASV.Controllers
 			return selectList;
 		}
 
+		[Authorize(Roles = "Administrator")]
 		[HttpPut]
 		public ActionResult Edit(string id, ApplicationUser newData)
 		{

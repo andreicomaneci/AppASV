@@ -1,0 +1,20 @@
+﻿@model AppASV.Models.Episode
+@{
+    ViewBag.Title = "Details of the episode " + Model.Title;
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="panel panel-default">
+    <div class="panel-heading">@Model.Title</div>
+    <div class="panel-body">
+        Length: <strong>@Model.Length</strong>
+        <br />
+        Air date: @Html.TextBoxFor(m => m.AirDate, "{0:dd/MM/yyyy}")
+        <br />
+    </div>
+    <div>
+        This is episode number @Model.EpisodeNumber of season @Model.SeasonNumber of
+        <a href="Series/Show/@Model.SeriesId">@ViewBag.Series.Title</a>
+    </div>
+</div>
