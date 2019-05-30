@@ -34,7 +34,7 @@ namespace AppASV.Controllers
 				Series series = db.Series.Find(fs.SeriesId);
 				seriesList.Add(series);
 			}
-			ViewBag.SeriesList = seriesList;
+			ViewBag.SeriesList = seriesList.OrderBy(x => x.Title).ToList();
 			return View();
 		}
 

@@ -290,6 +290,7 @@
     <Content Include="Views\Episode\Show.cshtml" />
     <Content Include="Views\Episode\New.cshtml" />
     <Content Include="Views\Users\Show.cshtml" />
+    <Content Include="Views\Episode\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

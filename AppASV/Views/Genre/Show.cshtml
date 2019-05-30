@@ -5,13 +5,18 @@
 
 <h2>@ViewBag.Title</h2>
 
-@foreach (AppASV.Models.Series series in ViewBag.Series)
-{
-    <br />
-    <div>
-        @series.Title <a class="btn btn-sm btn-success" href="/Series/Show/@series.SeriesId">Details</a>
-    </div>
-}
+
+<div>
+    <ul style="list-style-type:none;">
+        @foreach (AppASV.Models.Series series in ViewBag.Series)
+        {
+            <li><a href="/Series/Show/@series.SeriesId">@series.Title</a></li>
+
+        }
+    </ul>
+</div>
+
+<br />
 
 @if (ViewBag.afisareButoane)
 {

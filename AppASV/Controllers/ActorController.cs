@@ -19,7 +19,7 @@ namespace AppASV.Controllers
 			{
 				ViewBag.message = TempData["message"].ToString();
 			}
-			ViewBag.Actors = actors;
+			ViewBag.Actors = actors.OrderBy(x => x.LastName).ThenBy(x => x.FirstName).ToList();
 			ViewBag.afisareButoane = false;
 			if (User.IsInRole("Editor") || User.IsInRole("Administrator"))
 			{
@@ -66,6 +66,7 @@ namespace AppASV.Controllers
 				{
 					db.Actors.Add(actor);
 					db.SaveChanges();
+					TempData["message"] = "The actor has been added!";
 					return RedirectToAction("Index", "Actor");
 				}
 				else

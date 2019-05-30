@@ -1,11 +1,60 @@
 ﻿@model AppASV.Models.SeriesViewModel
 @using System
 @using Microsoft.AspNet.Identity
+@using AppASV.Models
 @{
     /**/
 
     ViewBag.Titlu = "Details of the series " + @Model.Series.Title;
 }
+
+    <head>
+        <style>
+            table.castTable {
+          border: 1px solid #000000;
+          background-color: #FFFFFF;
+          text-align: left;
+          border-collapse: collapse;
+        }
+        table.castTable td, table.castTable th {
+          border: 2px solid #959595;
+          padding: 2px 3px;
+        }
+        table.castTable tbody td {
+          font-size: 13px;
+        }
+        table.castTable thead {
+          background: #000000;
+          background: -moz-linear-gradient(top, #404040 0%, #191919 66%, #000000 100%);
+          background: -webkit-linear-gradient(top, #404040 0%, #191919 66%, #000000 100%);
+          background: linear-gradient(to bottom, #404040 0%, #191919 66%, #000000 100%);
+          border-bottom: 2px solid #2A2A2A;
+        }
+        table.castTable thead th {
+          font-size: 15px;
+          font-weight: bold;
+          color: #FFFFFF;
+          border-left: 2px solid #D6D8F5;
+        }
+        table.castTable thead th:first-child {
+          border-left: none;
+        }
+
+        table.castTable tfoot td {
+          font-size: 14px;
+        }
+        table.castTable tfoot .links {
+          text-align: right;
+        }
+        table.castTable tfoot .links a{
+          display: inline-block;
+          background: #1C6EA4;
+          color: #FFFFFF;
+          padding: 2px 8px;
+          border-radius: 5px;
+        }
+        </style>
+    </head>
 
 <h2>@ViewBag.Titlu</h2>
 
@@ -53,6 +102,29 @@
         <a class="btn btn-sm btn-success" href="/Episode/New">Add a new episode</a>
     }
 </div>
+
+<br />
+
+<div>
+    <table class="castTable">
+        <tr>
+            <th>Actor</th>
+            <th>Character</th>
+        </tr>
+        @foreach (Tuple<int, string, string> tuple in ViewBag.Cast)
+        {
+            <tr>
+                <td>
+                    <a href="/Actor/Show/@tuple.Item1">@tuple.Item2</a>
+                </td>
+                <td>@tuple.Item3</td>
+            </tr>
+        }
+    </table>
+
+</div>
+
+<br />
 
 <div>
 
@@ -115,10 +187,10 @@
                 {
                     iHaveReviewed = true;
                     @Html.ActionLink("Delete review", "Delete", "Review",
-                                        new { idSeries = review.SeriesId, idUser = review.UserId }, null)
+                         new { idSeries = review.SeriesId, idUser = review.UserId }, new { @class = "btn btn-danger" })
                     // <a href="/Categorie/Edit/@ViewBag.Ratings.IdRatingProdus">Modifica categorie</a>
                     @Html.ActionLink("Edit review", "Edit", "Review",
-                                        new { idSeries = review.SeriesId, idUser = review.UserId }, null)
+                         new { idSeries = review.SeriesId, idUser = review.UserId }, new { @class = "btn btn-warning" })
                 }
             }
 
