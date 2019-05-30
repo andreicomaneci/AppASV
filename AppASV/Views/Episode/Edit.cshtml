@@ -1,0 +1,36 @@
+﻿@model AppASV.Models.Episode
+@{
+    ViewBag.Title = "Details of the episode " + Model.Title;
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+<div>
+    <div>
+        @Html.LabelFor(x => x.Title, "Title")
+        @Html.TextBoxFor(x => x.Title)
+    </div>
+    <div>
+        @Html.LabelFor(x => x.Length, "Length")
+        @Html.EditorFor(x => x.Length)
+    </div>
+    <div>
+        @Html.LabelFor(x => x.AirDate, "Air date")
+        @Html.EditorFor(x => x.AirDate)
+    </div>
+    <div>
+        @Html.LabelFor(x => x.SeasonNumber, "Season number")
+        @Html.EditorFor(x => x.SeasonNumber)
+    </div>
+    <div>
+        @Html.LabelFor(x => x.EpisodeNumber, "Episode number")
+        @Html.EditorFor(x => x.EpisodeNumber)
+    </div>
+    @Html.HiddenFor(x => x.EpisodeId)
+    @Html.HiddenFor(x => x.SeriesId)
+    <input type="submit" value="Edit" />
+</div>
+}
+

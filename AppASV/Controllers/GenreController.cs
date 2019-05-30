@@ -34,12 +34,13 @@ namespace AppASV.Controllers
 			Genre genre = db.Genres.Find(name);
 			ViewBag.Genre = genre;
 			var seriesWithGenre = db.SeriesGenres.Where(x => x.GenreName == name).ToList();
-			ViewBag.Series = new List<Series>();
+			List<Series> seriesList = new List<Series>();
 			foreach (var x in seriesWithGenre)
 			{
 				Series series = db.Series.Find(x.SeriesId);
-				ViewBag.Series.Add(series);
+				seriesList.Add(series);
 			}
+			ViewBag.Series = seriesList.OrderBy(x => x.Title).ToList();
 			ViewBag.afisareButoane = false;
 			if (User.IsInRole("Editor") || User.IsInRole("Administrator"))
 			{

@@ -1,7 +1,7 @@
 ﻿@{
-                /**/
+    /**/
 
-                ViewBag.Title = "List of actors";
+    ViewBag.Title = "List of actors";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -11,21 +11,18 @@
     <h3 class="alert alert-info" role="alert">@ViewBag.message</h3>
 }
 
+<div>
+    <ul style="list-style-type:none;">
+        @foreach (AppASV.Models.Actor actor in ViewBag.Actors)
+        {
+            <li><a href="/Actor/Show/@actor.ActorId">@actor.FirstName @actor.LastName</a></li>
 
-@foreach (AppASV.Models.Actor actor in ViewBag.Actors)
-{
-<div class="panel panel-default">
-    <div class="panel-body">
-        <a href="/Actor/Show/@actor.ActorId">@actor.FirstName @actor.LastName</a>
-    </div>
-   
-    @*<div class="panel-footer">
-        <a class="btn btn-sm btn-success" href="/Genre/Show/@actor.ActorId">Details of this actor</a>
-    </div>*@
+        }
+    </ul>
 </div>
-    <br />
 
-}
+<br />
+
 @if (ViewBag.afisareButoane)
 {
     <a class="btn btn-sm btn-success" href="/Actor/New">Add a new actor</a>

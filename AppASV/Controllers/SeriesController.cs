@@ -31,7 +31,7 @@ namespace AppASV.Controllers
 		public ActionResult Index(string searchString)
 		{
 			var model = new SeriesViewModel();
-			var series = db.Series.ToList();
+			var series = db.Series.OrderBy(x => x.Title).ToList();
 
 			if (!String.IsNullOrEmpty(searchString))
 			{
@@ -84,6 +84,15 @@ namespace AppASV.Controllers
 			else
 			{
 				model.IsFavourite = false;
+			}
+
+			List<Role> characters = db.Characters.Where(x => x.SeriesId == id).OrderBy(x => x.CharacterName).ToList();
+			ViewBag.Cast = new List<Tuple<int, string, string>>();
+			foreach (Role character in characters)
+			{
+				Actor actor = db.Actors.Find(character.ActorId);
+				string actorName = actor.FirstName + " " + actor.LastName;
+				ViewBag.Cast.Add(new Tuple<int, string, string>(character.ActorId, actorName, character.CharacterName));
 			}
 
 			return View(model);
@@ -234,16 +243,17 @@ namespace AppASV.Controllers
 				}
 				else
 				{
-					return RedirectToAction("Index");
+					return RedirectToAction("Show", "Series", new { @id = model.Series.SeriesId});
 				}
 			}
 			catch (Exception e)
 			{
-				return RedirectToAction("Index");
+				return RedirectToAction("Show", "Series", new { @id = model.Series.SeriesId });
 			}
-			return RedirectToAction("Index");
+			return RedirectToAction("Show", "Series", new { @id = model.Series.SeriesId });
 		}
 
+		[Authorize(Roles = "Editor,Administrator")]
 		[HttpDelete]
 		public ActionResult Delete(int id)
 		{
@@ -255,7 +265,7 @@ namespace AppASV.Controllers
 			return RedirectToAction("Index");
 		}
 
-		
+		[Authorize(Roles = "User,Editor,Administrator")]
 		public ActionResult Unfavourite(int id)
 		{
 			Series series = db.Series.Find(id);
@@ -277,7 +287,7 @@ namespace AppASV.Controllers
 			return RedirectToAction("Show", new { id = id });
 		}
 
-		
+		[Authorize(Roles = "User,Editor,Administrator")]
 		public ActionResult Favourite(int id)
 		{
 			Series series = db.Series.Find(id);
@@ -364,7 +374,7 @@ namespace AppASV.Controllers
 		[NonAction]
 		public List<Episode> GetAllEpisodes(int id)
 		{
-			List<Episode> list = db.Episodes.Where(x => x.SeriesId == id).ToList();
+			List<Episode> list = db.Episodes.Where(x => x.SeriesId == id).OrderBy(x => x.SeasonNumber).ThenBy(x => x.EpisodeNumber).ToList();
 			return list;
 		}
 	}
