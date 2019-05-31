@@ -37,7 +37,7 @@ namespace AppASV.Controllers
 				{
 					db.Reviews.Add(review);
 					db.SaveChanges();
-					return RedirectToAction("Index", "Series");
+					return RedirectToAction("Show", "Series", new { @id = review.SeriesId });
 				}
 				else
 				{
@@ -46,7 +46,7 @@ namespace AppASV.Controllers
 			}
 			catch (Exception e)
 			{
-				return RedirectToAction("Index", "Series");
+				return RedirectToAction("Show", "Series", new { @id = review.SeriesId });
 			}
 		}
 
@@ -90,16 +90,16 @@ namespace AppASV.Controllers
 						review.Text = requestReview.Text;
 						db.SaveChanges();
 					}
-					return RedirectToAction("Index", "Series");
+					return RedirectToAction("Show", "Series", new { @id = requestReview.SeriesId });
 				}
 				else
 				{
-					return RedirectToAction("Index", "Series");
+					return RedirectToAction("Show", "Series", new { @id = requestReview.SeriesId });
 				}
 			}
 			catch (Exception)
 			{
-				return RedirectToAction("Index", "Series");
+				return RedirectToAction("Show", "Series", new { @id = requestReview.SeriesId });
 			}
 		}
 
@@ -112,7 +112,7 @@ namespace AppASV.Controllers
 				db.Reviews.Remove(review);
 				db.SaveChanges();
 			}
-			return RedirectToAction("Index", "Series");
+			return RedirectToAction("Show", "Series", new { @id = idSeries });
 		}
 	}
 }
